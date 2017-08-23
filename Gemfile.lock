@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    chronic (0.10.2)
     discourse_api (0.17.0)
       faraday (~> 0.9)
       faraday_middleware (~> 0.10)
@@ -11,12 +12,15 @@ GEM
       faraday (>= 0.7.4, < 1.0)
     multipart-post (2.0.0)
     rack (2.0.3)
+    whenever (0.9.7)
+      chronic (>= 0.6.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   discourse_api
+  whenever
 
 BUNDLED WITH
    1.13.7
