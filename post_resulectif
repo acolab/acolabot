@@ -1,0 +1,39 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'discourse_api'
+
+today = Date.today
+
+exit if today.cweek.odd?
+
+week_start = today - today.wday + 1
+next_meeting = week_start + 7 + 3
+date = next_meeting.strftime("%d/%m/%Y")
+
+title = "Regulectif du #{date}"
+text = <<EOF
+Les régulectifs sont des réunions sur la vie/fonctionnement/organisation de l'association. Ils sont ouverts à tous les membres souhaitant participer activement à la vie de l'association.
+
+Horaire : 18h30 - 20h30
+Lieu : [au local](https://acolab.fr/venir-nous-voir/)
+
+Au programme (à enrichir en fonction des souhaits des uns et des autres) :
+
+* ...
+
+L'association n'existe que par les gens qui participe à sa vie.
+EOF
+
+client = DiscourseApi::Client.new("https://forum.acolab.fr")
+client.api_key = File.read('API_KEY').strip
+client.api_username = "ACoLaBot"
+
+client.create_topic(
+  category: "FabManagement",
+  skip_validations: false,
+  auto_track: false,
+  title: title,
+  raw: text,
+  wiki: true,
+)
