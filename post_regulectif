@@ -2,6 +2,7 @@
 
 require 'bundler/setup'
 require 'discourse_api'
+require 'date'
 
 today = Date.today
 
