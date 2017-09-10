@@ -22,7 +22,7 @@ Au programme (à enrichir en fonction des souhaits des uns et des autres) :
 
 * ...
 
-L'association n'existe que par les gens qui participe à sa vie.
+L'association n'existe que par les gens qui participent à sa vie.
 EOF
 
 client = DiscourseApi::Client.new("https://forum.acolab.fr")
