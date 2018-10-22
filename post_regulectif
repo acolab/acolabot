@@ -31,7 +31,7 @@ client.api_key = File.read('API_KEY').strip
 client.api_username = "ACoLaBot"
 
 client.create_topic(
-  category: "Gestion-et-FabManagement",
+  category: 18, # FabManagement, voir https://forum.acolab.fr/site.json
   skip_validations: false,
   auto_track: false,
   title: title,
