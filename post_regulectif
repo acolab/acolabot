@@ -9,7 +9,7 @@ today = Date.today
 exit if today.cweek.odd?
 
 week_start = today - today.wday + 1
-next_meeting = week_start + 7 + 3
+next_meeting = week_start + 7 + 4
 date = next_meeting.strftime("%d/%m/%Y")
 
 title = "Regulectif du #{date}"
