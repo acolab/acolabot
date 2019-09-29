@@ -3,32 +3,37 @@
 require 'bundler/setup'
 require 'discourse_api'
 require 'date'
+require 'mustache'
 
 today = Date.today
 
-exit if today.cweek.odd?
+exit if today.cweek.odd? and ENV["ALWAYS_RUN"] != "1"
+
+client = DiscourseApi::Client.new("https://forum.acolab.fr")
+client.api_key = File.read('API_KEY').strip
+client.api_username = "ACoLaBot"
 
 week_start = today - today.wday + 1
 next_meeting = week_start + 7 + 4
 date = next_meeting.strftime("%d/%m/%Y")
 
-title = "Regulectif du #{date}"
-text = <<EOF
-Les régulectifs sont des réunions sur la vie/fonctionnement/organisation de l'association. Ils sont ouverts à tous les membres souhaitant participer activement à la vie de l'association.
+topic = client.topic(1130)
+title = topic["title"]
 
-Horaire : 18h30 - 20h30
-Lieu : [au local](https://acolab.fr/venir-nous-voir/)
+post_id = topic["post_stream"]["posts"].first["id"]
+post = client.get_post(post_id)
+text = post["raw"]
 
-Au programme (à enrichir en fonction des souhaits des uns et des autres) :
+title, text = [title, text].map do |string|
+  Mustache.render(string, date: date)
+end
 
-* ...
-
-L'association n'existe que par les gens qui participent à sa vie.
-EOF
-
-client = DiscourseApi::Client.new("https://forum.acolab.fr")
-client.api_key = File.read('API_KEY').strip
-client.api_username = "ACoLaBot"
+if ENV["NO_POST"] == "1"
+  puts title
+  puts "-" * 30
+  puts text
+  exit
+end
 
 client.create_topic(
   category: "FabManagement",
