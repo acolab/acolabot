@@ -19,6 +19,6 @@
 
 # Learn more: http://github.com/javan/whenever
 
-every :monday, at: "20 pm" do
+every :monday, at: "4 pm" do
   command "cd #{Dir.pwd} && ./post_regulectif"
 end
