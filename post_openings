@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'date'
+require 'active_support/core_ext'
+
+today = Date.today
+next_month = today.at_beginning_of_month.next_month
+
+text = <<~EOF.split("\n")
+Les mercredi, ouverture 17h30 jusqu’à environ 20h.
+Les samedi, ouverture 14h30 jusqu’à environ 18h.
+
+N’hésitez pas à venir nous voir !!
+EOF
+
+text << ""
+
+wdays = %w( Dimanche Lundi Mardi Mercredi Jeudi Vendredi Samedi )
+next_month.upto(next_month.end_of_month).each do |date|
+  wday = wdays[date.wday]
+
+  case wday
+  when "Mercredi", "Samedi"
+    text << "#{wday} #{date.day}"
+  when "Dimanche"
+    text << ""
+  end
+end
+
+text << ""
+text << "Ce sujet est en wiki, n’importe qui peut le modifier pour s’inscrire sur des créneaux ou ajouter des ouvertures supplémentaires !"
+
+puts text.join("\n")
