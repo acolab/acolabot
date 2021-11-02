@@ -7,14 +7,16 @@ require 'mustache'
 
 today = Date.today
 
+# Régulectif seulement les semaines impaires.
 exit if today.cweek.even? and ENV["ALWAYS_RUN"] != "1"
 
 client = DiscourseApi::Client.new("https://forum.acolab.fr")
 client.api_key = File.read('API_KEY').strip
 client.api_username = "ACoLaBot"
 
+# Détermine le lundi de la semaine en cours
 week_start = today - today.wday + 1
-next_meeting = week_start + 4
+next_meeting = week_start + 4 # lundi + 4 = vendredi
 date = next_meeting.strftime("%d/%m/%Y")
 
 # https://forum.acolab.fr/t/regulectif-du-date/1130
