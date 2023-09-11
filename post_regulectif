@@ -16,7 +16,7 @@ client.api_username = "ACoLaBot"
 
 # Détermine le lundi de la semaine en cours
 week_start = today - today.wday + 1
-next_meeting = week_start + 4 # lundi + 4 = vendredi
+next_meeting = week_start + 3 # lundi + 3 = jeudi
 date = next_meeting.strftime("%d/%m/%Y")
 
 # https://forum.acolab.fr/t/regulectif-du-date/1130
